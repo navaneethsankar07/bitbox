@@ -63,5 +63,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines. The short version:
 | Name | Tool |
 |------|------|
 | [@abduznik](https://github.com/abduznik) | project scaffold, 7 seed tools |
+| [@AviDhandhania](https://github.com/AviDhandhania) | count_vowels |
 
 <!-- Contributors are added automatically after PRs are merged -->
