@@ -1,0 +1,51 @@
+name: Auto Assign
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    if: |
+      !github.event.issue.pull_request &&
+      (
+        contains(github.event.comment.body, 'I want to work on this') ||
+        contains(github.event.comment.body, 'i want to work on this') ||
+        contains(github.event.comment.body, 'I\'d like to work on this') ||
+        contains(github.event.comment.body, 'i\'d like to work on this') ||
+        contains(github.event.comment.body, 'assign me') ||
+        contains(github.event.comment.body, 'Assign me') ||
+        contains(github.event.comment.body, 'I\'ll take this') ||
+        contains(github.event.comment.body, 'i\'ll take this') ||
+        contains(github.event.comment.body, 'Can I work on this') ||
+        contains(github.event.comment.body, 'can i work on this')
+      )
+    permissions:
+      issues: write
+    steps:
+      - name: Assign commenter
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUM=${{ github.event.issue.number }}
+          COMMENTER=${{ github.event.comment.user.login }}
+          REPO=${{ github.repository }}
+
+          # Check if already assigned
+          ASSIGNEES=$(gh api repos/$REPO/issues/$ISSUE_NUM --jq '.assignees[].login')
+
+          if echo "$ASSIGNEES" | grep -q "^$COMMENTER$"; then
+            echo "Already assigned to $COMMENTER"
+            exit 0
+          fi
+
+          # Check if someone else is already assigned
+          if [ -n "$ASSIGNEES" ]; then
+            gh issue comment $ISSUE_NUM --repo $REPO --body "This issue is already assigned. Please pick another one!"
+            exit 0
+          fi
+
+          # Assign
+          gh issue edit $ISSUE_NUM --repo $REPO --add-assignee "$COMMENTER"
+          gh issue comment $ISSUE_NUM --repo $REPO --body "Assigned to @$COMMENTER. Good luck!"
