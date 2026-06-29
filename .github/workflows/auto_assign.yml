@@ -10,16 +10,16 @@ jobs:
     if: |
       !github.event.issue.pull_request &&
       (
-        contains(github.event.comment.body, 'I want to work on this') ||
-        contains(github.event.comment.body, 'i want to work on this') ||
-        contains(github.event.comment.body, 'I\'d like to work on this') ||
-        contains(github.event.comment.body, 'i\'d like to work on this') ||
-        contains(github.event.comment.body, 'assign me') ||
-        contains(github.event.comment.body, 'Assign me') ||
-        contains(github.event.comment.body, 'I\'ll take this') ||
-        contains(github.event.comment.body, 'i\'ll take this') ||
-        contains(github.event.comment.body, 'Can I work on this') ||
-        contains(github.event.comment.body, 'can i work on this')
+        contains(toJSON(github.event.comment.body), 'assign me') ||
+        contains(toJSON(github.event.comment.body), 'take this') ||
+        contains(toJSON(github.event.comment.body), 'work on this') ||
+        contains(toJSON(github.event.comment.body), 'work on it') ||
+        contains(toJSON(github.event.comment.body), 'claim this') ||
+        contains(toJSON(github.event.comment.body), 'pick this up') ||
+        contains(toJSON(github.event.comment.body), 'take this up') ||
+        contains(toJSON(github.event.comment.body), 'give it a shot') ||
+        contains(toJSON(github.event.comment.body), 'give this a shot') ||
+        contains(toJSON(github.event.comment.body), 'tackle this')
       )
     permissions:
       issues: write
