@@ -4,7 +4,7 @@
 # example: starts_with("hello world", "hello") returns True
 
 
-def run(*args) -> bool:
+def run(*args) -> str:
     string = args[0]
     prefix = args[1]
-    return string.startswith(prefix)
+    return str(string.startswith(prefix))
