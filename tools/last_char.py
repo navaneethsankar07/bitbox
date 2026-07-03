@@ -4,6 +4,6 @@
 # example: last_char("hello") returns "o"
 
 
-def run(*args) -> bool:
+def run(*args) -> str:
     string = args[0]
     return string[-1] if string else ""
