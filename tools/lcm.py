@@ -17,3 +17,5 @@ def run(*args) -> str:
         return "Error: Both arguments must be valid integers."
 
     return str(math.lcm(a, b))
+
+
