@@ -12,4 +12,5 @@ def run(*args) -> str:
     try:
         d = date.fromisoformat(args[0])
     except ValueError:
-        return f"Error: invalid date {args[0]
+        return f"Error: invalid date '{args[0]}'"
+    return str(d.isocalendar().week)
